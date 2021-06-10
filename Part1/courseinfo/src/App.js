@@ -50,33 +50,36 @@ return(
 }//end of Total Component
 const App=()=>{
 
-  const course='Half Stack application development';
-  const part1={
+  const course={ //creation of a course object, that has a name and an array of parts. 
+
+  name:'Half Stack application development',
+
+  parts:[ //creating an array of objects that represent the different parts of the course.
+  {//part 1 of the course 
       name:'Fundamentals of React',
       exercises:10
 
-  }
-  const part2={
+  },
+  {//part 2 of the course
     name:'Using props to pass data',
     exercises:7
-  }
+  },
 
-  const part3={
+  {//part 3 of the course
     name:"State of a component",
     exercises:14
   }
+] //end of parts  array 
+
+}//end of the Course object.
   
   return (
     <div>
-      <Header course={course} /> 
-      <Content part1={part1} part2={part2} part3={part3}  />
-      <Total exercises1={part1.exercises} exercises2={part2.exercises} exercises3={part3.exercises}/>
+      <Header course={course.name} /> 
+      <Content part1={course.parts[0]} part2={course.parts[1]} part3={course.parts[2]}  />
+      <Total exercises1={course.parts[0].exercises} exercises2={course.parts[1].exercises} exercises3={course.parts[2].exercises}/>
     </div>
   )
-
-
-
-
 
 }
 
