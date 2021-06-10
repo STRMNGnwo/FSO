@@ -10,15 +10,29 @@ return(
 
 }//end of Header component
 
+const Part=(props)=>{
+
+console.log("Hello from the Part Component");
+
+return( //returning a Part Component
+
+    <p>{props.part} {props.exercises}</p>
+
+)
+
+
+}//end of the Part Component
+
 const Content=(props)=>{
 
   console.log("Hello from the Content Component!");
 
- return(
+ return( //creating 3 Parts and passing in different inputs to props each time
   <>
-    <p>{props.part1} {props.exercises1}</p>
-    <p>{props.part2} {props.exercises2}</p>
-    <p>{props.part3} {props.exercises3}</p>
+    <Part part={props.part1} exercises={props.exercises1}/>
+    <Part part={props.part2} exercises={props.exercises2}/>
+    <Part part={props.part3} exercises={props.exercises3}/>
+
 
   </>
  )
