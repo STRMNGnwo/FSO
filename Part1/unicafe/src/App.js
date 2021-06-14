@@ -20,6 +20,17 @@ function Button(props) { //Button Component, props include function handle and t
 
   var totalFeedback=0; //global variable that represents TotalFeedback
   
+  function Statistic(props){
+
+     return(
+       <>
+        <p>{props.text}: {props.value}</p>
+       </>
+     )
+
+  } //end of Statistic Component
+
+
   function Statistics(props){
     
     if(props.good===0&&props.neutral===0&&props.bad===0)
@@ -30,19 +41,23 @@ function Button(props) { //Button Component, props include function handle and t
     }
     var averageFeedback=( (props.good-props.bad)/totalFeedback ) ||0;
     var positiveFeedback=( ( (props.good/totalFeedback) *100) ||0);
+
+    //The Statistic Component is used to print out one statistic at a time.
     return(
       <>
      <Texts text="statistics" /> 
-     <p>Good Feedback: {props.good}</p>
-     <p>Neutral Feedback: {props.neutral}</p>
-     <p>Negative Feedback: {props.bad}</p>
-     <p>Total Feedback: {totalFeedback}</p>
-     <p>Average Feedback: {averageFeedback} </p>
-     <p>Positive Feedback: {positiveFeedback}</p>
+     <Statistic text="Good Feedback" value={props.good} />
+     <Statistic text="Neutral Feedback" value={props.neutral} />
+     <Statistic text="Negative Feedback" value={props.bad} />
+     <Statistic text="Total Feedback" value={totalFeedback} />
+     <Statistic text="Average Feedback" value={averageFeedback}/>
+     <Statistic text="Positive Feedback" value={positiveFeedback}/>
       </>
     )
   
   }//end of the Statistics component.
+
+
 function App() {
 
   const[good, setGood]=useState(0);
