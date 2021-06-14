@@ -24,7 +24,7 @@ function Button(props) { //Button Component, props include function handle and t
 
      return(
        <>
-        <p>{props.text}: {props.value}</p>
+        <td><p>{props.text}:</p></td> <td> <p>{props.value}</p></td>
        </>
      )
 
@@ -46,12 +46,14 @@ function Button(props) { //Button Component, props include function handle and t
     return(
       <>
      <Texts text="statistics" /> 
-     <Statistic text="Good Feedback" value={props.good} />
-     <Statistic text="Neutral Feedback" value={props.neutral} />
-     <Statistic text="Negative Feedback" value={props.bad} />
-     <Statistic text="Total Feedback" value={totalFeedback} />
-     <Statistic text="Average Feedback" value={averageFeedback}/>
-     <Statistic text="Positive Feedback" value={positiveFeedback}/>
+     <table >
+       <tr> <Statistic text="Good Feedback" value={props.good} />  </tr>
+       <tr>  <Statistic text="Neutral Feedback" value={props.neutral} /> </tr>
+       <tr>  <Statistic text="Negative Feedback" value={props.bad} />    </tr>
+     <tr><Statistic text="Total Feedback" value={totalFeedback} /> </tr>
+     <tr><Statistic text="Average Feedback" value={averageFeedback}/> </tr>
+     <tr><Statistic text="Positive Feedback" value={positiveFeedback}/> </tr>
+     </table>
       </>
     )
   
