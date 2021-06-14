@@ -5,7 +5,7 @@ function Display(props){
 
   return(
     <>
-      <p>{props.value}</p>
+      <p>{props.text} {props.value}</p>
     </>
   )
 }
@@ -32,17 +32,30 @@ function App() {
   ]
 
   const [selected, setSelected] = useState(null);
+  const[votes,setVotes]=useState(Array(anecdotes.length).fill(0)); //this state is an array used to store the count of the votes.
 
   const getRandomAnecdote=()=>{
 
     setSelected( Math.floor((Math.random()*anecdotes.length) ) );
     
   }
+
+  const updateVotes=(index)=>{
+     
+    console.log("Updating Votes for index", index);
+    const copyState={...votes}; //creating a copy of the array
+
+    copyState[index]++; //incrementing the anecdote that received a vote.
+
+    setVotes(copyState); //passing the array into the updateVotes function to update the state.
+  }
   
   return (
     <>
     <Button functionHandle={getRandomAnecdote} text="Click me to get a random Anecdote" />
-    <Display value={anecdotes[selected]} />
+    <Button functionHandle={()=>updateVotes(selected)} text="Vote for this anecdote!"/>
+    <Display text="" value={anecdotes[selected]} />
+    <Display text="Votes received"value={votes[selected]} />
 
     </>
   );
