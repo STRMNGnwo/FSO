@@ -20,13 +20,30 @@ function Button(props) { //Button Component, props include function handle and t
 
   var totalFeedback=0; //global variable that represents TotalFeedback
   
+  function Statistics(props){
+    
+    var averageFeedback=( (props.good-props.bad)/totalFeedback ) ||0;
+    var positiveFeedback=( ( (props.good/totalFeedback) *100) ||0);
+    return(
+      <>
+     <Texts text="statistics" /> 
+     <p>Good Feedback: {props.good}</p>
+     <p>Neutral Feedback: {props.neutral}</p>
+     <p>Negative Feedback: {props.bad}</p>
+     <p>Total Feedback: {totalFeedback}</p>
+     <p>Average Feedback: {averageFeedback} </p>
+     <p>Positive Feedback: {positiveFeedback}</p>
+      </>
+    )
+  
+  }//end of the Statistics component.
 function App() {
 
   const[good, setGood]=useState(0);
   const[neutral,setNeutral]=useState(0);
   const[bad,setBad]=useState(0);
 
-  var averageFeedback=(good-bad)/totalFeedback;
+  
 
   const addGoodReview=()=>{ //helper functions to change  state indirectly through button press.
     totalFeedback++;
@@ -49,13 +66,8 @@ function App() {
     <Button functionHandle={addGoodReview} text="good" />
     <Button functionHandle={addNeutralReview} text="neutral" />
     <Button functionHandle={addBadReview} text="bad" />
-    <Texts text="statistics" />
-    <p>good:{good}</p> 
-    <p>neutral:{neutral}</p>
-    <p>bad:{bad} </p>
-    <p>Total Feedback: {totalFeedback}</p>
-    <p>Average Feedback: {averageFeedback||0}</p>
-    <p>Positive Feedback: {((good/totalFeedback)*100)||0}%</p>
+    <Statistics good={good} neutral={neutral} bad={bad} />
+    
     
 
 
