@@ -5,7 +5,8 @@ function Display(props){
 
   return(
     <>
-      <p>{props.text} {props.value}</p>
+    <h1>{props.text}</h1>
+      <p> {props.value} has {props.votes} votes</p>
     </>
   )
 }
@@ -17,6 +18,8 @@ return(
 )
 
 }
+
+var largestIndex=0;
 
 function App() {
 
@@ -33,6 +36,8 @@ function App() {
 
   const [selected, setSelected] = useState(null);
   const[votes,setVotes]=useState(Array(anecdotes.length).fill(0)); //this state is an array used to store the count of the votes.
+  //const[maxVotesIndex, setMaxVotesIndex]=useState(0);
+
 
   const getRandomAnecdote=()=>{
 
@@ -47,15 +52,17 @@ function App() {
 
     copyState[index]++; //incrementing the anecdote that received a vote.
 
+    if(copyState[index]>=votes[largestIndex]) largestIndex=index; //when updating votes, check if the votes of this anecdote is greater than the most votes an anecdote has received.
+
     setVotes(copyState); //passing the array into the updateVotes function to update the state.
   }
   
   return (
     <>
+    <Display text="Anecdote of the Day" value={anecdotes[selected]} votes={votes[selected]} />
     <Button functionHandle={getRandomAnecdote} text="Click me to get a random Anecdote" />
     <Button functionHandle={()=>updateVotes(selected)} text="Vote for this anecdote!"/>
-    <Display text="" value={anecdotes[selected]} />
-    <Display text="Votes received"value={votes[selected]} />
+    <Display text="Anecdote with most Votes" value={anecdotes[largestIndex]} votes={votes[largestIndex]}/>
 
     </>
   );
