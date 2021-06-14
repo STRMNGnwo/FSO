@@ -22,6 +22,12 @@ function Button(props) { //Button Component, props include function handle and t
   
   function Statistics(props){
     
+    if(props.good===0&&props.neutral===0&&props.bad===0)
+    {
+      return(
+        <p>No Feedback has been provided</p>
+      )
+    }
     var averageFeedback=( (props.good-props.bad)/totalFeedback ) ||0;
     var positiveFeedback=( ( (props.good/totalFeedback) *100) ||0);
     return(
