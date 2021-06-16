@@ -20,11 +20,10 @@ const Content=(props)=>{
      
     //the code above creates a Part Component, for every element in the parts array. The created Parts components are returned in an array and are assigned to dynamicParts.
     console.log(dynamicParts);
-   return( //creating 3 Parts and passing in different inputs to props each time
+   return( 
     <>
-      
      {dynamicParts}
-     <p>Total number of exercises: {totalExercises}</p>
+     <h2>Total number of exercises: {totalExercises}</h2>
   
     </>
    )
