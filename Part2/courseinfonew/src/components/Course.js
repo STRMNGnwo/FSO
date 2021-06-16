@@ -7,7 +7,7 @@ const Course=(props)=>{
 console.log("Props value is: ",props);
 const courseObject= props.course; //destructuring props into courseObject
 
-const parts=courseObject.parts; //creating an array of the different parts of the course.
+const parts=courseObject.parts; //creating an array of objects that represent the different parts of the course.This will be passed into the Content Component.
 
 console.log(parts);
 

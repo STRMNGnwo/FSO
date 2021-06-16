@@ -24,8 +24,8 @@ function App() {
         id: 3
       },
       {
-        name:'React',
-        exercises:17,
+        name:'Redux',
+        exercises:11,
         id:4
       }
     ]
