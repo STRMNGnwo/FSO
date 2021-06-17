@@ -2,11 +2,19 @@ import React,{useState} from 'react'
 import List from './components/List'
 function App() {
   //need to define a state for the app, that tracks the list of contact numbers.
-  const[persons,setPersons]=useState([{name:"Arto Hellas", number:"123456789"}]);
+  const[persons,setPersons]=useState([ 
+  { name: 'Arto Hellas', number: '040-123456' },
+  { name: 'Ada Lovelace', number: '39-44-5323523' },
+  { name: 'Dan Abramov', number: '12-43-234345' },
+  { name: 'Mary Poppendieck', number: '39-23-6423122' }]);
+
   //need to define a state,to access the value from the contact name input element in the form tag.
   const[newName,setNewName]=useState('');
   //need to define a state, to access the value from the contact phone number input element in the form tag.
   const[newNumber,setNewNumber]=useState('');
+
+  //need to implement another state for another input element, which acts as a search field.
+  const [searchString,setSearchString]=useState('');
 
   const addContact=(event)=>{ //called when the form is submitted
     
@@ -48,10 +56,32 @@ function App() {
 
   }
 
-  const contactsList=persons.map((person,index)=><List key={person.name} name={person.name} number={person.number}/>)
+  const handleSearchField=(event)=>{
+    
+    console.log("Handling Search Field");
+    const newSearchString=event.target.value;
+    setSearchString(newSearchString);
+  }
+
+  var validSearchString=false;
+
+  if(searchString!=='') validSearchString=true;
+
+  
+ 
+  //can use the ternary operator, to dynamically create contactsList.
+  const contactsList=validSearchString?persons.filter((person)=> (person.name.toUpperCase()).includes(searchString.toUpperCase()) ):persons;
+   //Explaining the above line- if searchString exists, the persons array is filtered to return only elements that contains the searchSring.Otherwise, the entire contacts array is returned.
+  const displayList=contactsList.map((contact)=><List key={contact.name} name={contact.name} number={contact.number} />)
+
   return (
     <>
     <h1>PhoneBook</h1>
+     
+    <label htmlFor="Search">Search your List of Contacts</label>
+    <input id="Search" value={searchString} name="searchField" onChange={handleSearchField}/>
+
+    <h2>Add a Contact!</h2>
     <form onSubmit={addContact}>
        <label htmlFor="contactName">Name:</label>
       <input id="contactName" value={newName} name="contactName" onChange={handleNameInputChange} /> 
@@ -63,9 +93,9 @@ function App() {
 
     </form>
 
-    <h2>Numbers</h2>
+    <h3>Numbers</h3>
     <ul>
-      {contactsList}
+      {displayList}
     </ul>
     
     </>
