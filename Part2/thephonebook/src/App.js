@@ -10,8 +10,23 @@ function App() {
     
     console.log("Adding a new contact");
     event.preventDefault();//called to prevent default action of the form.
-    const newContact= {name:newName};
-    setPersons(persons.concat(newContact));
+
+    //define a condition where if contact exists already, an alert is issued.
+    
+    //the find function returns the value of the first element that satisfies the condition  or returns undefined.
+    const existsAlready= persons.find((person)=>person.name===newName);
+    
+    console.log(existsAlready);
+    if(existsAlready!==undefined)  alert(`${newName} is already a contact`);
+    
+
+    else{
+        console.log("Unique contact");
+      const newContact={ name:newName};
+
+      setPersons(persons.concat(newContact));
+    }
+    
     setNewName('');
 
   }
@@ -44,3 +59,37 @@ function App() {
 }
 
 export default App;
+
+/* The original way I checked if a contact already existed, before I realised, JS Arrays have methods to do so (array.find method).
+
+
+var alreadyExists=false;
+    
+    persons.forEach((person)=>{
+       
+      
+      if(person.name === newName)
+      {
+        console.log(person.name+ "is the same as "+ newName);
+        alreadyExists=true;
+        return
+       
+      }
+    } 
+    )//end of forEach
+     
+    console.log(alreadyExists);
+    if(alreadyExists===true)
+    {
+      alert(`${newName} already exists in the phonebook`);
+    }
+
+    else if(alreadyExists!==true) {
+      console.log("Else if statement working");
+    const newContact= {name:newName};
+    setPersons(persons.concat(newContact));
+    }
+
+
+
+*/
