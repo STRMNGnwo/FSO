@@ -2,11 +2,11 @@ import React from 'react'
 
 const List=(props)=>{
 
-const {name}= props;
+const {name,number}= props; //destructing props properties into their own variables.
 
 return(
     <>
-     <li>{name}</li>
+     <li>{name} : {number}</li>
     </>
 )
 

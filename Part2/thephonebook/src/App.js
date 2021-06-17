@@ -2,9 +2,11 @@ import React,{useState} from 'react'
 import List from './components/List'
 function App() {
   //need to define a state for the app, that tracks the list of contact numbers.
-  const[persons,setPersons]=useState([{name:"Arto Hellas"}]);
-  //need to define a state,to access the value from the input element in the form tag.
+  const[persons,setPersons]=useState([{name:"Arto Hellas", number:"123456789"}]);
+  //need to define a state,to access the value from the contact name input element in the form tag.
   const[newName,setNewName]=useState('');
+  //need to define a state, to access the value from the contact phone number input element in the form tag.
+  const[newNumber,setNewNumber]=useState('');
 
   const addContact=(event)=>{ //called when the form is submitted
     
@@ -22,29 +24,41 @@ function App() {
 
     else{
         console.log("Unique contact");
-      const newContact={ name:newName};
+      const newContact={ name:newName,number:newNumber};
 
       setPersons(persons.concat(newContact));
     }
     
     setNewName('');
+    setNewNumber('');
 
   }
 
-  const handleInputChange=(event)=>{ //event handler to handle the input value
+  const handleNameInputChange=(event)=>{ //event handler to handle the input value for name
      
     const input=event.target.value; //used to access the value in the input tag(target) and assigning it to formValue variable.
     setNewName(input); //changing the state indirectly.inputValue now has the value of input, and can be used to add a contact.
 
   }
 
-  const contactsList=persons.map((person,index)=><List key={person.name} name={person.name}/>)
+  const handleNumberInputChange=(event)=>{ //event handler to handle the input value for phone number.
+
+    const number=event.target.value;
+    setNewNumber(number);
+
+  }
+
+  const contactsList=persons.map((person,index)=><List key={person.name} name={person.name} number={person.number}/>)
   return (
     <>
     <h1>PhoneBook</h1>
     <form onSubmit={addContact}>
        <label htmlFor="contactName">Name:</label>
-      <input id="contactName" value={newName} name="contact" onChange={handleInputChange} /> 
+      <input id="contactName" value={newName} name="contactName" onChange={handleNameInputChange} /> 
+      <br/> 
+      <label htmlFor="contactNumber"> Number:</label>
+      <input id="contactNumber"value={newNumber} name="contactNumber" onChange={handleNumberInputChange} />
+      <br/>
       <button type="submit">Add Contact</button>
 
     </form>
