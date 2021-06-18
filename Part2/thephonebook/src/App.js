@@ -1,5 +1,7 @@
 import React,{useState} from 'react'
 import List from './components/List'
+import AddContact from './components/AddContact'
+import Search from './components/Search'
 function App() {
   //need to define a state for the app, that tracks the list of contact numbers.
   const[persons,setPersons]=useState([ 
@@ -67,8 +69,6 @@ function App() {
 
   if(searchString!=='') validSearchString=true;
 
-  
- 
   //can use the ternary operator, to dynamically create contactsList.
   const contactsList=validSearchString?persons.filter((person)=> (person.name.toUpperCase()).includes(searchString.toUpperCase()) ):persons;
    //Explaining the above line- if searchString exists, the persons array is filtered to return only elements that contains the searchSring.Otherwise, the entire contacts array is returned.
@@ -78,21 +78,12 @@ function App() {
     <>
     <h1>PhoneBook</h1>
      
-    <label htmlFor="Search">Search your List of Contacts</label>
-    <input id="Search" value={searchString} name="searchField" onChange={handleSearchField}/>
+    <Search id="Search" searchString={searchString} changeFunc={handleSearchField} />
 
     <h2>Add a Contact!</h2>
-    <form onSubmit={addContact}>
-       <label htmlFor="contactName">Name:</label>
-      <input id="contactName" value={newName} name="contactName" onChange={handleNameInputChange} /> 
-      <br/> 
-      <label htmlFor="contactNumber"> Number:</label>
-      <input id="contactNumber"value={newNumber} name="contactNumber" onChange={handleNumberInputChange} />
-      <br/>
-      <button type="submit">Add Contact</button>
 
-    </form>
-
+    <AddContact nameID="contactName" numberID="contactNumber" name={newName} number={newNumber } changeNameFunc={handleNameInputChange} changeNumberFunc={handleNumberInputChange }submitFunction={addContact} />
+    
     <h3>Numbers</h3>
     <ul>
       {displayList}
