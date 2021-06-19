@@ -1,6 +1,8 @@
 import React,{useState,useEffect}from 'react';
 import List from "./components/List";
 import Button from "./components/Button"
+import CountryInformation from "./components/CountryInformation"
+import SearchField from "./components/SearchField"
 import axios from 'axios';
 
 function App() {
@@ -8,6 +10,7 @@ function App() {
   const[displayCountries,setDisplayCountries]=useState([]); //this state variable is used to store the list of countries retrieved.
   const[searchString, setSearchString] =useState(''); //this state variable is used to store the value of the searchString obtained from input element.
   const[displayView,setDisplayView]=useState([]); //this state is used to display the country's detailed information when button is pressed. 
+  
   useEffect(()=>{
     const url="https://restcountries.eu/rest/v2/all";
 
@@ -25,20 +28,12 @@ function App() {
     setDisplayView([]); //reseting displayView to nothing.
   }
 
-  
-  var validSearchString=true;
-
-  if(searchString==='') validSearchString=false;
- 
-  //the line below would return every country, or only countries that contain the search String in their name.
-  const countriesList=validSearchString ? displayCountries.filter((country)=>((country.name).toUpperCase()).includes(searchString.toUpperCase()) ) :displayCountries;
-   
   const handleButtonClick=(country)=>{ //outer function takes in a country object as a  parameter.
      
     console.log("Handling click");
     //inner function actually displays the new view.
     const displayCountry=()=>{
-    const display=<List key={country.name} name={country.name} capital={country.capital} population={country.population} languages={country.languages}/>;
+    const display=<CountryInformation name={country.name} capital={country.capital} population={country.population} languages={country.languages}/>;
     
     console.log(display);
 
@@ -48,16 +43,23 @@ function App() {
     return displayCountry; //outer function returns the inner function
 
   }
+
+  var validSearchString=true;
+
+  if(searchString==='') validSearchString=false;
+ 
+  //the line below would return every country, or only countries that contain the search String in their name.
+  const countriesList=validSearchString ? displayCountries.filter((country)=>((country.name).toUpperCase()).includes(searchString.toUpperCase()) ) :displayCountries;
+   
   //the line below results in a string being printed out or a list of country names.A ternary operator is used.
   const displayList=countriesList.length>10 ? "Please be more specific with your search, there are too many possibilities" :
-  countriesList.map((country)=><><List key={country.name} name={country.name}/> <Button functionHandle={handleButtonClick(country)} text="Show!"/> </>);
+  countriesList.map((country)=><><List key={country.name} text={country.name}/> <Button functionHandle={handleButtonClick(country)} text="Show!"/> </>);
   
   
 
   return (
     <>
-    <label htmlFor="searchField">Search for a Country</label>
-    <input id="searchField" value={searchString} name="searchField" onChange={handleSearchField}/>
+    <SearchField id="Search" value={searchString} functionHandle={handleSearchField} />
     <br></br>
      <ul>   {displayList}  </ul>
 
@@ -69,10 +71,6 @@ function App() {
 }
 
 export default App;
-
-
-
-
 
 
 //probably an inefficient way to do it, as multiple requests to the API would be made, as a result of the onChange of the searchString.
