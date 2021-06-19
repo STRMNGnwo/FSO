@@ -1,14 +1,11 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import List from './components/List'
 import AddContact from './components/AddContact'
 import Search from './components/Search'
+import axios from 'axios';
 function App() {
   //need to define a state for the app, that tracks the list of contact numbers.
-  const[persons,setPersons]=useState([ 
-  { name: 'Arto Hellas', number: '040-123456' },
-  { name: 'Ada Lovelace', number: '39-44-5323523' },
-  { name: 'Dan Abramov', number: '12-43-234345' },
-  { name: 'Mary Poppendieck', number: '39-23-6423122' }]);
+  const[persons,setPersons]=useState([]);
 
   //need to define a state,to access the value from the contact name input element in the form tag.
   const[newName,setNewName]=useState('');
@@ -17,6 +14,14 @@ function App() {
 
   //need to implement another state for another input element, which acts as a search field.
   const [searchString,setSearchString]=useState('');
+
+   useEffect(()=>{
+    
+    axios.get("http://localhost:3001/persons").catch((error)=>console.log(error)).then((response)=>{
+      console.log("data received"); setPersons(response.data);
+    })
+
+   },[]) //end of useEffect, which fires only afer the App components is initially rendered
 
   const addContact=(event)=>{ //called when the form is submitted
     
@@ -72,7 +77,8 @@ function App() {
   //can use the ternary operator, to dynamically create contactsList.
   const contactsList=validSearchString?persons.filter((person)=> (person.name.toUpperCase()).includes(searchString.toUpperCase()) ):persons;
    //Explaining the above line- if searchString exists, the persons array is filtered to return only elements that contains the searchSring.Otherwise, the entire contacts array is returned.
-  const displayList=contactsList.map((contact)=><List key={contact.name} name={contact.name} number={contact.number} />)
+  
+   const displayList=contactsList.map((contact)=><List key={contact.name} name={contact.name} number={contact.number} />)
 
   return (
     <>
@@ -128,3 +134,9 @@ var alreadyExists=false;
 
 
 */
+
+/* [ 
+  { name: 'Arto Hellas', number: '040-123456' },
+  { name: 'Ada Lovelace', number: '39-44-5323523' },
+  { name: 'Dan Abramov', number: '12-43-234345' },
+  { name: 'Mary Poppendieck', number: '39-23-6423122' }]  */
