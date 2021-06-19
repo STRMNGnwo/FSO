@@ -29,7 +29,7 @@ function App() {
   //the line below would return every country, or only countries that contain the search String in their name.
   const countriesList=validSearchString ? displayCountries.filter((country)=>((country.name).toUpperCase()).includes(searchString.toUpperCase()) ) :displayCountries;
    
-  //the line below results in a string being printed out or a list of country names. It consists of a nested ternary operator.
+  //the line below results in a string being printed out or a list of country names. It consists of a nested ternary operator. Based on fulfillment of conditions, certain things are displayed.
   const displayList=
   countriesList.length>10 ? "Please be more specific with you search, there are too many possibilities" :
 (countriesList.length===1)? countriesList.map((country)=><List key={country.name} name={country.name} capital={country.capital} population={country.population} languages={country.languages}/>)                                           :
