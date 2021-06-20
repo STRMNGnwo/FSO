@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import List from './components/List'
 import AddContact from './components/AddContact'
 import Search from './components/Search'
-import axios from 'axios';
+import service from "./services/contacts.js"
 function App() {
   //need to define a state for the app, that tracks the list of contact numbers.
   const[persons,setPersons]=useState([]);
@@ -18,9 +18,7 @@ function App() {
 
    useEffect(()=>{
     
-    axios.get("http://localhost:3001/persons").catch((error)=>console.log(error)).then((response)=>{
-      console.log("data received"); setPersons(response.data);
-    })
+   service.getContacts().then((contacts)=>setPersons(contacts));
 
    },[]) //end of useEffect, which fires only afer the App components is initially rendered, as a result of the []
 
@@ -42,8 +40,8 @@ function App() {
         console.log("Unique contact");
       const newContact={ name:newName,number:newNumber};
 
-      axios.post("http://localhost:3001/persons",newContact).then((response=>console.log(response))).catch(error=>console.log(error.message));
-
+      //axios.post("http://localhost:3001/persons",newContact).then((response=>console.log(response))).catch(error=>console.log(error.message));
+       service.createContact(newContact).then(response=>console.log(response));
       setPersons(persons.concat(newContact));
     }
     
