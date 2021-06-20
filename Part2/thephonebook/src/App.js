@@ -7,6 +7,7 @@ function App() {
   //need to define a state for the app, that tracks the list of contact numbers.
   const[persons,setPersons]=useState([]);
 
+  //input elements states defined below
   //need to define a state,to access the value from the contact name input element in the form tag.
   const[newName,setNewName]=useState('');
   //need to define a state, to access the value from the contact phone number input element in the form tag.
@@ -21,7 +22,7 @@ function App() {
       console.log("data received"); setPersons(response.data);
     })
 
-   },[]) //end of useEffect, which fires only afer the App components is initially rendered
+   },[]) //end of useEffect, which fires only afer the App components is initially rendered, as a result of the []
 
   const addContact=(event)=>{ //called when the form is submitted
     
@@ -41,9 +42,12 @@ function App() {
         console.log("Unique contact");
       const newContact={ name:newName,number:newNumber};
 
+      axios.post("http://localhost:3001/persons",newContact).then((response=>console.log(response))).catch(error=>console.log(error.message));
+
       setPersons(persons.concat(newContact));
     }
     
+    //resetting the input field values
     setNewName('');
     setNewNumber('');
 
