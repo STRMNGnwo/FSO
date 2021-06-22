@@ -16,9 +16,10 @@ const createContact=(newContact)=>{
     return request.then((response)=>{ return response.data});
 }
 
-const updateContact=(updatedContact)=>{
+const updateContact=(updatedContact,id)=>{
 
-    const request=axios.put(baseURL,updatedContact);
+    const url=`${baseURL}/${id}`
+    const request=axios.put(url,updatedContact);
 
     return request.then((response)=>{return response.data});
 }
@@ -30,5 +31,7 @@ const deleteContact=(contactToDelete)=>{
 
     return request.then((response)=>{return response.data});
 }
+
+
 
 export default {getContacts,createContact,updateContact,deleteContact}

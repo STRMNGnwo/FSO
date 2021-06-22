@@ -25,15 +25,27 @@ function App() {
   const addContact=(event)=>{ //called when the form is submitted
     
     console.log("Adding a new contact");
-    event.preventDefault();//called to prevent default action of the form.
+    event.preventDefault();
 
-    //define a condition where if contact exists already, an alert is issued.
-    
     //the find function returns the value of the first element that satisfies the condition  or returns undefined.
     const existsAlready= persons.find((person)=>person.name===newName);
     
     console.log(existsAlready);
-    if(existsAlready!==undefined)  alert(`${newName} is already a contact`);
+    if(existsAlready!==undefined)
+    {
+     //need to update phone number, after asking user if they want to do so.
+     if(window.confirm(`${newName} already exists in the phonebook, do you want to update their phone number, with the number provided?`))
+     {
+       
+       service.updateContact({name:newName,number:newNumber},existsAlready.id).then((response)=>{
+         console.log(response);
+         service.getContacts().then(response=>setPersons(response));});
+       
+       setNewName('');
+       setNewNumber('');
+
+     }
+    } 
     
 
     else{
