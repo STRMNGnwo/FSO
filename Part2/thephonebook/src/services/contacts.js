@@ -23,4 +23,12 @@ const updateContact=(updatedContact)=>{
     return request.then((response)=>{return response.data});
 }
 
-export default {getContacts,createContact,updateContact}
+const deleteContact=(contactToDelete)=>{
+
+    const url=`${baseURL}/${contactToDelete}`;
+    const request=axios.delete(url);
+
+    return request.then((response)=>{return response.data});
+}
+
+export default {getContacts,createContact,updateContact,deleteContact}

@@ -49,7 +49,30 @@ function App() {
     setNewName('');
     setNewNumber('');
 
-  }
+  }//end of addContact method.
+
+  const deleteContact=(name)=>{
+    
+    console.log(name);
+    const actuallyDeleteContact=()=>{
+      
+      if(window.confirm("Do you really want to delete "+name+" ?")){
+
+      const contactToDelete=persons.find((person)=>person.name===name) //getting the element to be deleted from the array of elements.
+      console.log(contactToDelete);
+      const newContactsList= persons.filter((person)=>person.name!==name) //the list without the deleted contact.
+
+      service.deleteContact(contactToDelete.id).then((response)=>console.log(response)); //deleting contact from server as well.
+      setPersons(newContactsList);
+      }
+
+      return null;
+    }
+  
+    return actuallyDeleteContact;
+
+    
+  }//end of deleteContact method.
 
   const handleNameInputChange=(event)=>{ //event handler to handle the input value for name
      
@@ -80,7 +103,7 @@ function App() {
   const contactsList=validSearchString?persons.filter((person)=> (person.name.toUpperCase()).includes(searchString.toUpperCase()) ):persons;
    //Explaining the above line- if searchString exists, the persons array is filtered to return only elements that contains the searchSring.Otherwise, the entire contacts array is returned.
   
-   const displayList=contactsList.map((contact)=><List key={contact.name} name={contact.name} number={contact.number} />)
+   const displayList=contactsList.map((contact)=><><List key={contact.name} name={contact.name} number={contact.number} /><button onClick={deleteContact(contact.name)}>Delete</button>  </>)
 
   return (
     <>
