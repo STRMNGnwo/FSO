@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import List from './components/List'
 import AddContact from './components/AddContact'
 import Search from './components/Search'
+import Notification from './components/Notification'
 import service from "./services/contacts.js"
 function App() {
   //need to define a state for the app, that tracks the list of contact numbers.
@@ -15,6 +16,9 @@ function App() {
 
   //need to implement another state for another input element, which acts as a search field.
   const [searchString,setSearchString]=useState('');
+
+  //state variable to show error messages, if any.
+  const[notification,setNotification]=useState(null);
 
    useEffect(()=>{
     
@@ -47,13 +51,24 @@ function App() {
      }
     } 
     
-
     else{
         console.log("Unique contact");
       const newContact={ name:newName,number:newNumber};
 
       //axios.post("http://localhost:3001/persons",newContact).then((response=>console.log(response))).catch(error=>console.log(error.message));
-       service.createContact(newContact).then(response=>console.log(response));
+       service.createContact(newContact).then(response=>{
+         
+        console.log(response);
+
+        setNotification(<Notification text={`Added ${newName}`} type="TEXT"/>)
+        setTimeout(()=>setNotification(null),3000);
+      
+      }).catch((error)=>{
+         setNotification(<Notification text={error.message} type="ERROR" />);
+
+         setTimeout(()=>setNotification(null),3000); //removing the error message after 3 seconds, and re-rendering the component.
+       });
+      
       setPersons(persons.concat(newContact));
     }
     
@@ -115,7 +130,7 @@ function App() {
   const contactsList=validSearchString?persons.filter((person)=> (person.name.toUpperCase()).includes(searchString.toUpperCase()) ):persons;
    //Explaining the above line- if searchString exists, the persons array is filtered to return only elements that contains the searchSring.Otherwise, the entire contacts array is returned.
   
-   const displayList=contactsList.map((contact)=><><List key={contact.name} name={contact.name} number={contact.number} /><button onClick={deleteContact(contact.name)}>Delete</button>  </>)
+   const displayList=contactsList.map((contact)=><div key={contact.name}><List key={contact.name} name={contact.name} number={contact.number} /> <button onClick={deleteContact(contact.name)}>Delete</button> </div>)
 
   return (
     <>
@@ -128,6 +143,7 @@ function App() {
     <AddContact nameID="contactName" numberID="contactNumber" name={newName} number={newNumber } changeNameFunc={handleNameInputChange} changeNumberFunc={handleNumberInputChange }submitFunction={addContact} />
     
     <h3>Numbers</h3>
+    {notification}
     <ul>
       {displayList}
     </ul>

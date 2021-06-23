@@ -26,9 +26,14 @@
       "id": 5
     },
     {
-      "name": "New Contact",
-      "number": "22-22-2222222",
+      "name": "Lauri Markannen",
+      "number": "00-00-1111111",
       "id": 6
+    },
+    {
+      "name": "Lauri Markannen",
+      "number": "00-00-1111111",
+      "id": 7
     }
   ]
 }

@@ -6,7 +6,7 @@ const {name,number}= props; //destructing props properties into their own variab
 
 return(
     <>
-     <li>{name} : {number}</li>
+     <li className="note" >{name} : {number}</li>
     </>
 )
 
