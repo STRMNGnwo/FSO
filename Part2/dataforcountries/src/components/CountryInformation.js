@@ -1,5 +1,6 @@
 import React from 'react';
-import List from "./List"
+import List from "./List";
+import Weather from "./Weather";
 const CountryInformation=(props)=>{
 
     const {name,capital,population,languages}=props; //destructuring props properties into their own separate variables.
@@ -14,6 +15,7 @@ const CountryInformation=(props)=>{
         <ul>
         {languages.map((language)=><List key={language.name} text={language.name} />)}
         </ul>
+        <Weather city={capital}/>
       </>
     )
 }

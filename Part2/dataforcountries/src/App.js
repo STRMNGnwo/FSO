@@ -21,6 +21,7 @@ function App() {
     
   },[])
 
+  
   const handleSearchField=(event)=>{    //used to handle onChange calls from the input field.
   
     console.log("handling search field");
@@ -33,7 +34,7 @@ function App() {
     console.log("Handling click");
     //inner function actually displays the new view.
     const displayCountry=()=>{
-    const display=<CountryInformation name={country.name} capital={country.capital} population={country.population} languages={country.languages}/>;
+    const display=<><CountryInformation name={country.name} capital={country.capital} population={country.population} languages={country.languages}/>  </>;
     
     console.log(display);
 
