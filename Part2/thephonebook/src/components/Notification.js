@@ -11,7 +11,10 @@ const Notification=(props)=>{
 
         textSize:16,
         color:"Red",
-        textStyle:"Bold"
+        borderStyle: "solid",
+        borderRadius: 5,
+        padding: 10,
+        marginBottom: 10
     }
 
     const styling={

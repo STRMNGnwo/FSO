@@ -43,7 +43,10 @@ function App() {
        
        service.updateContact({name:newName,number:newNumber},existsAlready.id).then((response)=>{
          console.log(response);
-         service.getContacts().then(response=>setPersons(response));});
+         service.getContacts().then(response=>setPersons(response));}).catch((error)=>{
+          setNotification(<Notification text={`${newName} has already been removed from the server`} type="ERROR"/>)
+          setTimeout(()=>setNotification(null),3000);
+        });
        
        setNewName('');
        setNewNumber('');
