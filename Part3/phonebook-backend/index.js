@@ -3,6 +3,7 @@ const express=require('express') //importing the express module.
 const app=express(); //initialsing an express app.
 const port=3001;
 
+app.use(express.json());
  var persons=[
     
         {
@@ -75,6 +76,19 @@ app.delete('/api/persons/:id',(request,response)=>{
     return response.end("Deletion completed");
 })
 
+app.post('/api/persons',(request,response)=>{
+
+    const newContact=request.body;
+
+    console.log(newContact);
+
+    newContact.id=Math.round((Math.random()*10000)+persons.length);
+    newContact.important=request.body.important||false;
+
+    persons=persons.concat(newContact);
+
+    return response.json(persons);
+})
 app.listen(port,()=>console.log(`Server running at port ${port}`));
 
 
