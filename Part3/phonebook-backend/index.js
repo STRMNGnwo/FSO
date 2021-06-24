@@ -41,6 +41,16 @@ app.get("/api/persons",(request,response)=>{
     return response.json(notes); //return is used here to stop execution at this point in this block
 })
 
+app.get('/api/info',(request,response)=>{
+
+    const sizeOfPhonebook=notes.length;
+    const timeOfRequest=new Date()
+
+    console.log(timeOfRequest);
+
+    return response.end(`<p>Phonebook has info for ${sizeOfPhonebook} people </p> <p>${timeOfRequest}</p>`)
+})
+
 app.listen(port,()=>console.log(`Server running at port ${port}`));
 
 
