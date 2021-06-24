@@ -82,6 +82,17 @@ app.post('/api/persons',(request,response)=>{
 
     console.log(newContact);
 
+    if(!newContact.name.trim()||!newContact.number.trim()) return response.status(400).json({error:"Name or Number has not been provided"})
+
+    console.log(newContact.name.toUpperCase());
+    
+    const uniqueContact=persons.find((person)=>(person.name.toUpperCase())===(newContact.name.toUpperCase()) )
+
+    console.log(uniqueContact);
+
+    if(uniqueContact!==undefined) return response.status(400).json({error:"Name must be Unique"});
+    
+
     newContact.id=Math.round((Math.random()*10000)+persons.length);
     newContact.important=request.body.important||false;
 
