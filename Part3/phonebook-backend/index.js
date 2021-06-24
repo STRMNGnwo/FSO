@@ -3,7 +3,7 @@ const express=require('express') //importing the express module.
 const app=express(); //initialsing an express app.
 const port=3001;
 
-const persons=[
+ var persons=[
     
         {
             id:1,
@@ -46,7 +46,7 @@ app.get('/api/persons/:id',(request,response)=>{
     const id=Number(request.params.id);
     const returnPerson= persons.find((person)=>person.id===id);
     console.log(returnPerson);
-    if(!returnPerson)return response.status(204).end("Person cannot be found in the phonebook")
+    if(!returnPerson)return response.status(400).json({error:"Person cannot be found in the phonebook"})
     
    
     return response.json(returnPerson)
@@ -55,12 +55,24 @@ app.get('/api/persons/:id',(request,response)=>{
 
 app.get('/api/info',(request,response)=>{
 
-    const sizeOfPhonebook=notes.length;
+    const sizeOfPhonebook=persons.length;
     const timeOfRequest=new Date()
 
     console.log(timeOfRequest);
 
     return response.end(`<p>Phonebook has info for ${sizeOfPhonebook} people </p> <p>${timeOfRequest}</p>`)
+})
+
+app.delete('/api/persons/:id',(request,response)=>{
+    
+    const id=Number(request.params.id);
+    console.log(id);
+    const deleteContact=persons.find((person)=>person.id===id);
+
+    if(!deleteContact) return response.status(400).json({error:"Person does not exist in the phonebook"});
+    persons=persons.filter((person)=>person.id!==id);
+
+    return response.end("Deletion completed");
 })
 
 app.listen(port,()=>console.log(`Server running at port ${port}`));
