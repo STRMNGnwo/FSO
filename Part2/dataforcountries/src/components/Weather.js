@@ -7,7 +7,7 @@ const Weather=(props)=>{
     const {city}=props;
     console.log(city);
     useEffect(()=>{ //useEffect function to get Weather from the weather api
-        const apiKey="92ea0f7f68223a12442601cda617d83d";
+        const apiKey="Enter your api key here!";
        const url=`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
 
         console.log(url);
