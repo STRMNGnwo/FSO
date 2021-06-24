@@ -3,7 +3,7 @@ const express=require('express') //importing the express module.
 const app=express(); //initialsing an express app.
 const port=3001;
 
-const notes=[
+const persons=[
     
         {
             id:1,
@@ -38,7 +38,19 @@ app.get("/",(request,response)=>{
 
 app.get("/api/persons",(request,response)=>{
 
-    return response.json(notes); //return is used here to stop execution at this point in this block
+    return response.json(persons); //return is used here to stop execution at this point in this block
+})
+
+app.get('/api/persons/:id',(request,response)=>{
+
+    const id=Number(request.params.id);
+    const returnPerson= persons.find((person)=>person.id===id);
+    console.log(returnPerson);
+    if(!returnPerson)return response.status(204).end("Person cannot be found in the phonebook")
+    
+   
+    return response.json(returnPerson)
+    
 })
 
 app.get('/api/info',(request,response)=>{
