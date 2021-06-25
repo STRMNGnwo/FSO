@@ -5,9 +5,17 @@ const port=3001;
 
 var morgan=require('morgan')//importing the morgan logging middleware;
 
+morgan.token('body',function(request){
+
+    console.log(request.body);
+   return JSON.stringify(request.body);
+})
+
 app.use(express.json());
 
-app.use(morgan('tiny')) //calling morgan to log messages to server console, based on the predefined tiny configuration.
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
+
  var persons=[
     
         {
@@ -107,3 +115,21 @@ app.post('/api/persons',(request,response)=>{
 app.listen(port,()=>console.log(`Server running at port ${port}`));
 
 
+/*app.use(morgan(function(tokens,request,response){
+     
+    console.log("inside new morgan function");
+    
+    console.log("After creating a new morgan token");
+    return[
+        tokens.method(request,response),
+        tokens.url(request,response),
+        tokens.status(request,response),
+        tokens.res(request, response, 'content-length'), '-',
+        tokens.body(request,response)
+
+    ]
+
+    
+
+})) //calling morgan to log messages to server console, based on the predefined tiny configuration.
+*/
