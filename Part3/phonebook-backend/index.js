@@ -3,7 +3,11 @@ const express=require('express') //importing the express module.
 const app=express(); //initialsing an express app.
 const port=3001;
 
+var morgan=require('morgan')//importing the morgan logging middleware;
+
 app.use(express.json());
+
+app.use(morgan('tiny')) //calling morgan to log messages to server console, based on the predefined tiny configuration.
  var persons=[
     
         {
