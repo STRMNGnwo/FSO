@@ -3,6 +3,7 @@ const express=require('express') //importing the express module.
 const app=express(); //initialsing an express app.
 const port=3001;
 
+const mongoose=require('mongoose');
 var morgan=require('morgan')//importing the morgan logging middleware;
 
 morgan.token('body',function(request){
@@ -11,36 +12,9 @@ morgan.token('body',function(request){
    return JSON.stringify(request.body);
 })
 
-app.use(express.json());
+app.use(express.json()); //express middleware to parse incoming json data
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))//morgan middleware to log stuff to the console
 
-
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
-
- var persons=[
-    
-        {
-            id:1,
-            name:"Arto Hellas",
-            number:"87-33-1234567"
-
-        },
-        {
-            id:2,
-            name:"Ada Lovelace",
-            number:"39-44-5223523"
-        },
-        {
-            id:3,
-            name:"Dan Abramov",
-            number:"12-43-234345"
-        },
-        {
-            id:4,
-            name:"Mary Poppendick",
-            number:"39-23-6423112"
-        }
-
-    ]
 
 //time to make routes!
 
@@ -49,9 +23,9 @@ app.get("/",(request,response)=>{
     response.end("<h1>Hello World, from this API that gives you json data! </h1>");
 })
 
-app.get("/api/persons",(request,response)=>{
+app.get("/api/persons",(request,response)=>{ //this endpoint retrieves all Contacts in the contacts collection of the mongoDB database
 
-    return response.json(persons); //return is used here to stop execution at this point in this block
+      return response.json(persons); //return is used here to stop execution at this point in this block
 })
 
 app.get('/api/persons/:id',(request,response)=>{
@@ -133,3 +107,29 @@ app.listen(port,()=>console.log(`Server running at port ${port}`));
 
 })) //calling morgan to log messages to server console, based on the predefined tiny configuration.
 */
+
+ /*var persons=[
+    
+        {
+            id:1,
+            name:"Arto Hellas",
+            number:"87-33-1234567"
+
+        },
+        {
+            id:2,
+            name:"Ada Lovelace",
+            number:"39-44-5223523"
+        },
+        {
+            id:3,
+            name:"Dan Abramov",
+            number:"12-43-234345"
+        },
+        {
+            id:4,
+            name:"Mary Poppendick",
+            number:"39-23-6423112"
+        }
+
+    ]*/
