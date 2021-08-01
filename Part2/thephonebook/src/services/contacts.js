@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 //this file is used for all network requests for the thephonebook.
-const baseURL="http://localhost:3001/persons"
+const baseURL="http://localhost:3001/api/persons"
 const getContacts=()=>{
 
     const request=axios.get(baseURL); //Promise stored in request variable.
