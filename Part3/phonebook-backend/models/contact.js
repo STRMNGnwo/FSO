@@ -16,13 +16,13 @@ const contactSchema=mongoose.Schema({
     number:String
 })
 
-/*contactSchema.set("toJSON",{
+contactSchema.set("toJSON",{
     transform: (document, returnedObject) => {
       returnedObject.id = returnedObject._id.toString()
       delete returnedObject._id
       delete returnedObject.__v
     }
-  })*/
+  })
 
 const Contact=mongoose.model('Contact',contactSchema)
 //exporting the mongoose model as a Node module using CJS convention

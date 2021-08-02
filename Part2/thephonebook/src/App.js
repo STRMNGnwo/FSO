@@ -47,13 +47,10 @@ function App() {
           setNotification(<Notification text={`${newName} has already been removed from the server`} type="ERROR"/>)
           setTimeout(()=>setNotification(null),3000);
         });
-       
        setNewName('');
        setNewNumber('');
-
      }
     } 
-    
     else{
         console.log("Unique contact");
       const newContact={ name:newName,number:newNumber};
@@ -98,10 +95,7 @@ function App() {
 
       return null;
     }
-  
     return actuallyDeleteContact;
-
-    
   }//end of deleteContact method.
 
   const handleNameInputChange=(event)=>{ //event handler to handle the input value for name
@@ -112,14 +106,11 @@ function App() {
   }
 
   const handleNumberInputChange=(event)=>{ //event handler to handle the input value for phone number.
-
     const number=event.target.value;
     setNewNumber(number);
-
   }
 
   const handleSearchField=(event)=>{
-    
     console.log("Handling Search Field");
     const newSearchString=event.target.value;
     setSearchString(newSearchString);
@@ -133,7 +124,7 @@ function App() {
   const contactsList=validSearchString?persons.filter((person)=> (person.name.toUpperCase()).includes(searchString.toUpperCase()) ):persons;
    //Explaining the above line- if searchString exists, the persons array is filtered to return only elements that contains the searchSring.Otherwise, the entire contacts array is returned.
   
-   const displayList=contactsList.map((contact)=><div key={contact.name}><List key={contact.name} name={contact.name} number={contact.number} /> <button onClick={deleteContact(contact.name)}>Delete</button> </div>)
+   const displayList=contactsList.map((contact)=><div key={contact.name}><List key={contact.id} name={contact.name} number={contact.number} id={contact.id}/> <button onClick={deleteContact(contact.name)}>Delete</button> </div>)
 
   return (
     <>
