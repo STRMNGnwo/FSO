@@ -29,7 +29,7 @@ function App() {
   const addContact=(event)=>{ //called when the form is submitted
     
     console.log("Adding a new contact");
-    event.preventDefault();
+    event.preventDefault();//preventing the default action of the form.
 
     //the find function returns the value of the first element that satisfies the condition  or returns undefined.
     const existsAlready= persons.find((person)=>person.name===newName);
@@ -54,11 +54,7 @@ function App() {
     else{
         console.log("Unique contact");
       const newContact={ name:newName,number:newNumber};
-
-      //axios.post("http://localhost:3001/persons",newContact).then((response=>console.log(response))).catch(error=>console.log(error.message));
        service.createContact(newContact).then(response=>{
-         
-        //console.log(response);
 
         setNotification(<Notification text={`Added ${newName}`} type="TEXT"/>)
         setTimeout(()=>setNotification(null),3000);
@@ -71,9 +67,9 @@ function App() {
          setTimeout(()=>setNotification(null),3000); //removing the error message after 3 seconds, and re-rendering the component.
          setPersons(persons);
        });
+
        setPersons(persons.concat(newContact));
     }
-    
     //resetting the input field values
     setNewName('');
     setNewNumber('');
@@ -81,14 +77,13 @@ function App() {
   }//end of addContact method.
 
   const deleteContact=(name)=>{
-    
     //console.log(name);
     const actuallyDeleteContact=()=>{
       
       if(window.confirm("Do you really want to delete "+name+" ?")){
 
       const contactToDelete=persons.find((person)=>person.name===name) //getting the element to be deleted from the array of elements.
-      console.log(contactToDelete);
+     // console.log(contactToDelete);
       const newContactsList= persons.filter((person)=>person.name!==name) //the list without the deleted contact.
 
       service.deleteContact(contactToDelete.id).then((response)=>console.log(response)); //deleting contact from server as well.
