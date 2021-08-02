@@ -58,18 +58,20 @@ function App() {
       //axios.post("http://localhost:3001/persons",newContact).then((response=>console.log(response))).catch(error=>console.log(error.message));
        service.createContact(newContact).then(response=>{
          
-        console.log(response);
+        //console.log(response);
 
         setNotification(<Notification text={`Added ${newName}`} type="TEXT"/>)
         setTimeout(()=>setNotification(null),3000);
       
       }).catch((error)=>{
-         setNotification(<Notification text={error.message} type="ERROR" />);
+        console.log("Error status:",error.response.status);
+        console.log(error.response.data);
+         setNotification(<Notification text={error.response.data.message} type="ERROR" />);
 
          setTimeout(()=>setNotification(null),3000); //removing the error message after 3 seconds, and re-rendering the component.
+         setPersons(persons);
        });
-      
-      setPersons(persons.concat(newContact));
+       setPersons(persons.concat(newContact));
     }
     
     //resetting the input field values
@@ -80,7 +82,7 @@ function App() {
 
   const deleteContact=(name)=>{
     
-    console.log(name);
+    //console.log(name);
     const actuallyDeleteContact=()=>{
       
       if(window.confirm("Do you really want to delete "+name+" ?")){

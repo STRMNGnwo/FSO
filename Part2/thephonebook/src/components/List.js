@@ -4,7 +4,7 @@ const List=(props)=>{
 
 const {name,number,id}= props; //destructing props properties into their own variables.
 
-console.log("id is: ",id);
+//console.log("id is: ",id);
 
 return(
     <>

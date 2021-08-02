@@ -10,17 +10,27 @@ const Contact=require('./models/contact.js')//now Contact should be a Mongoose m
 var morgan=require('morgan')//importing the morgan logging middleware;
 
 morgan.token('body',function(request){
-
     console.log(request.body);
    return JSON.stringify(request.body);
 })
 
 //user defined error handler method, everytime next(error) is invoked, this method should be called.
 const errorHandler=(error,request,response,next)=>{
- 
-    console.log(error.name);
-    console.log(error.message);
-    return response.status(400).json({message:"Something went wrong"});
+
+    console.log("HANDLING THE ERROR");
+    //console.log(error.name);
+    //console.log(error.message);
+    if (error.name === 'CastError') {
+        return response.status(400).send({ error: 'malformatted id' })
+      } 
+      else if (error.name === 'ValidationError') {
+          console.log("Encountered a Validation error")
+          console.log(error.message);
+        return response.status(400).json({ message: "Validation Error" })
+      }
+      //if error is not both of the above scenarios, pass the error to the default express error handler
+       next(error)
+    //return response.status(400).json({message:"Something went wrong"});
 }
 
 app.listen(port,()=>console.log(`Server running at port ${port}`));
@@ -28,8 +38,6 @@ app.listen(port,()=>console.log(`Server running at port ${port}`));
 app.use(express.json()); //express middleware to parse incoming json data
 app.use(cors({origin:"http://localhost:3000"}))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))//morgan middleware to log stuff to the console
-app.use(errorHandler);
-
 //time to make routes!
 
 app.get("/",(request,response)=>{
@@ -38,7 +46,6 @@ app.get("/",(request,response)=>{
 })
 
 app.get("/api/persons",(request,response,next)=>{ //this endpoint retrieves all Contacts in the contacts collection of the mongoDB database
-
       //return response.json(persons); //return is used here to stop execution at this point in this block
       Contact.find({}).then((data)=>{
            console.log(data);
@@ -124,7 +131,7 @@ app.post('/api/persons',(request,response,next)=>{
 
     console.log(contactDetails.name.toUpperCase());
 
-    Contact.countDocuments({name:contactDetails.name},(error,data)=>{ //This doesn't have to be done, as uniqueness is checked in the frontend as well, but just to be safe.
+    Contact.countDocuments({name:contactDetails.name},(error,data)=>{ //Checking uniqueness in backend, after its done in frontend as well.
         if(error){
             console.log(error);
             //return response.status(500).json({message:"An error occurred"})
@@ -143,9 +150,11 @@ app.post('/api/persons',(request,response,next)=>{
         newContact.save().then((data)=>{
             console.log(`${data.name} has been saved to the database`);
             return response.json(data);
-        })
+        }).catch((error)=>{console.log("Contact cannot be saved");next(error)})
     })
 })
+
+app.use(errorHandler);
 
 
 
