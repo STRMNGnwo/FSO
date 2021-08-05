@@ -1,15 +1,6 @@
 
 const mongoose=require("mongoose")
 
-// eslint-disable-next-line no-undef
-const url=process.env.MONGODB_URI
-
-mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true }).then(()=>{
-  console.log("Connected to the MongoDB Database cluster")
-}).catch((error)=>{
-  console.log(error.message)
-})
-
 //creating a new schema
 
 const contactSchema=mongoose.Schema({

@@ -1,0 +1,17 @@
+
+GET http://localhost:3001/api/persons
+
+###
+DELETE http://localhost:3001/api/persons/61045b91846c087d507bb4ae
+###
+POST http://localhost:3001/api/persons
+Content-Type:application/json
+
+{
+    "name": "Dallas Mavericks",
+    "number":"20-17-1743268"
+
+}
+
+###
+GET http://localhost:3001/api/info

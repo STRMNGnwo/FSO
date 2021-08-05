@@ -4,7 +4,7 @@ module.exports = {
         "commonjs": true,
         "es2021": true
     },
-    "extends": "eslint:recommended",
+    "extends": "eslint:recommended", // you can also add eslint configs from companies(airbnb eslint etc), that are shared as a npm package
     "parserOptions": {
         "ecmaVersion": 12
     },
