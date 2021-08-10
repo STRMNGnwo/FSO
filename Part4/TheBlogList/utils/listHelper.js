@@ -39,8 +39,53 @@ const blogWithMostLikes=(blogList)=>{
     return highestLikesBlog;
 }
 
+const authorWithMostBlogs=(blogList)=>{
+
+    //blogList is an array of blog objects. Each blog object should have a author property.
+    
+    var authorNames=[] //string array to hold names of encountered authors.
+
+    var authors=[];//array to hold author objects, each object has two fields:name and blogs.
+
+    //iterate through the blogList and add unique author names to the authors array. If author is in the list already, then increment the totalBlogs of that author;
+
+     for(var i=0;i<blogList.length;i++)//looping through the blogList
+     {
+       if(! authorNames.includes(blogList[i].author)) 
+       {
+           var newAuthor={
+            author:blogList[i].author,
+            blogs:1
+           }
+          authors=authors.concat(newAuthor);
+           authorNames=authorNames.concat(blogList[i].author);
+       }
+
+       else {
+           var indexToUpdate=authorNames.indexOf(blogList[i].author)
+            authors[indexToUpdate].blogs++;  
+       }
+     }
+
+     console.log(authors);
+
+     var authorWithHighestBlogs=authors[0];
+
+     for(var i=0;i<authors.length;i++)
+     {
+         if(authors[i].blogs>=authorWithHighestBlogs.blogs)
+         {
+             authorWithHighestBlogs=authors[i];
+         }
+     }
+
+    return authorWithHighestBlogs;
+
+}
+
 module.exports={
     dummy,
     totalLikes,
-    blogWithMostLikes
+    blogWithMostLikes,
+    authorWithMostBlogs
 }
