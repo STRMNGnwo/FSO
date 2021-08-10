@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "The BlogList for FSO",
   "main": "index.js",
+  "jest":{
+    "testEnvironment":"node"
+  },
   "scripts": {
-    "start":"npm run index.js",
-    "dev":"nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run index.js",
+    "dev": "nodemon index.js",
+    "test": "jest --verbose"
   },
   "author": "Srinivas Ilancheran",
   "license": "ISC",
@@ -17,7 +20,7 @@
     "mongoose": "^5.13.5"
   },
   "devDependencies": {
+    "jest": "^27.0.6",
     "nodemon": "^2.0.12"
   }
 }
-

@@ -17,6 +17,7 @@ mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true, useFindA
 app.use(cors({origin:true}));
 app.use(express.json());
 
+//routes
 app.use("/api",blogRouter);
 
 
