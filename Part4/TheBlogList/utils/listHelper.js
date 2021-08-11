@@ -39,7 +39,7 @@ const blogWithMostLikes=(blogList)=>{
     return highestLikesBlog;
 }
 
-const authorWithMostBlogs=(blogList)=>{
+const mostBlogs=(blogList)=>{
 
     //blogList is an array of blog objects. Each blog object should have a author property.
     
@@ -83,9 +83,61 @@ const authorWithMostBlogs=(blogList)=>{
 
 }
 
+const mostLikes=(blogList)=>{
+
+    //The function returns the author, whose blog posts have the largest amount of likes. The return value also contains the total number of likes that the author has received:
+
+    var authorNames=[];
+
+    var authors=[]; //array to store author objects that have two properties- author and totalLikes.
+    
+    var mostLikedAuthor;
+    var numberOfAuthors=0;
+    for(var i=0;i<blogList.length;i++)
+    {
+        if(!authorNames.includes(blogList[i].author))
+        {
+            authorNames=authorNames.concat(blogList[i].author);
+            var newAuthor={
+                author:blogList[i].author,
+                totalLikes:blogList[i].likes
+            };
+            authors=authors.concat(newAuthor);
+            numberOfAuthors++; //keeping track of the number of authors.
+            if(i==0) 
+            {
+                mostLikedAuthor=authors[0];
+            }
+            //console.log(authors[numberOfAuthors-1]);
+
+             //handling edge case, where an author may have a wildly popular blog initially, so to check if his initial blog is more popular than the current most popular blog.
+             //I use numberOfAuthors as index as if an author appears multiple times in the blogList, authors would be smaller than blogList
+            if(authors[numberOfAuthors-1].totalLikes>=mostLikedAuthor.totalLikes) mostLikedAuthor=authors[i];
+
+        }
+
+        else{
+            //authorNames and authors should have the same positions, as both of them have no duplicates and are in the same order.
+            var indexToFind=authorNames.indexOf(blogList[i].author);
+            authors[indexToFind].totalLikes+=blogList[i].likes;
+
+            if(authors[indexToFind].totalLikes>=mostLikedAuthor.totalLikes)
+            {
+               mostLikedAuthor=authors[indexToFind];
+            }
+        }
+    }
+
+    //console.log(authors);
+    console.log("Most liked author is: ",mostLikedAuthor);
+
+    return mostLikedAuthor;
+}
+
 module.exports={
     dummy,
     totalLikes,
     blogWithMostLikes,
-    authorWithMostBlogs
+    mostBlogs,
+    mostLikes
 }

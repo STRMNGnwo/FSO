@@ -103,12 +103,26 @@ describe("Testing functions that find Highest properties of blogs in blogList:",
 
     test("checking if the function to find author with most blogs works:",()=>{
 
-        const result= testFunctions.authorWithMostBlogs(blogList);
+        const result= testFunctions.mostBlogs (blogList);
          
         const correctResult = {
             author:"Robert C. Martin",
             blogs:3
         }
+        expect(result).toEqual(correctResult);
+    })
+
+    test("checking if the function to find mostLiked author works:",()=>{
+
+        const result=testFunctions.mostLikes(blogList);
+
+        const correctResult={
+            author:"Edsger W. Dijkstra",
+            totalLikes:17
+        }
+
+        console.log(result);
+
         expect(result).toEqual(correctResult);
     })
 })
